@@ -8,4 +8,4 @@ export  KBUILD_OUTPUT=out32
 #set defconfig
 make zte_blade_a476_p0_k49_defconfig
 #start compile
-make zImage-dtb -j16 2>&1 | tee out32/build.log
+make zImage-dtb -j1 2>&1 | tee out32/build.log

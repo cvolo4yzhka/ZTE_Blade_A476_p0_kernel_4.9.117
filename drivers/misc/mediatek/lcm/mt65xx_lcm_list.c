@@ -31,6 +31,9 @@ struct LCM_DRIVER *lcm_driver_list[] = {
 #if defined(ILI9881C_HD_DSI_VDO_ILITEK_NT50358_3LANE)
 	&ili9881c_hd_dsi_vdo_ilitek_nt50358_3lane_lcm_drv,
 #endif
+#if defined(HX8394F_HD720_DSI_VDO_LIDE)
+	&hx8394f_hd720_dsi_vdo_lide_lcm_drv,
+#endif	
 #if defined(OTM1284A_HD720_DSI_VDO_TM)
 	&otm1284a_hd720_dsi_vdo_tm_lcm_drv,
 #endif
