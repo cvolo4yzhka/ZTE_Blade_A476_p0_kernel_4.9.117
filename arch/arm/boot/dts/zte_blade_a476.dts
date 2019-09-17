@@ -11,57 +11,7 @@
 #include "mt6735m.dts"
 #endif
 
-&cpus {
-	#address-cells = <1>;
-	#size-cells = <0>;
-	/*enable-method = "mediatek,mt6735-smp"; */
-
-	cpu0: cpu@000 {
-		device_type = "cpu";
-		compatible = "arm,cortex-a53";
-		reg = <0x000>;
-		enable-method = "spin-table";
-		cpu-release-addr = <0x0 0x40000200>;
-		clock-frequency = <1000000000>;
-	};
-
-	cpu1: cpu@001 {
-		device_type = "cpu";
-		compatible = "arm,cortex-a53";
-		reg = <0x001>;
-		enable-method = "spin-table";
-		cpu-release-addr = <0x0 0x40000200>;
-		clock-frequency = <1000000000>;
-	};
-
-	cpu2: cpu@002 {
-		device_type = "cpu";
-		compatible = "arm,cortex-a53";
-		reg = <0x002>;
-		enable-method = "spin-table";
-		cpu-release-addr = <0x0 0x40000200>;
-		clock-frequency = <1000000000>;
-	};
-
-	cpu3: cpu@003 {
-		device_type = "cpu";
-		compatible = "arm,cortex-a53";
-		reg = <0x003>;
-		enable-method = "spin-table";
-		cpu-release-addr = <0x0 0x40000200>;
-		clock-frequency = <1000000000>;
-	};
-};
-
 &bus {
-	MALI@0x13040000 {
-		compatible = "arm,malit720", "arm,mali-t72x", "arm,malit7xx", "arm,mali-midgard";
-		reg = <0x13040000 0x4000>;
-		interrupts = <0 212 0x8>, <0 211 0x8>, <0 210 0x8>;
-		interrupt-names = "JOB", "MMU", "GPU";
-		clock-frequency = <550000000>;
-	};
-
 	MTKFB@5e200000 {
 		compatible = "mediatek,MTKFB";
 		reg = <0x7F000000 0x1000000>;
@@ -71,13 +21,13 @@
 &odm {
 	led0:led@0 {
 		compatible = "mediatek,red";
-		led_mode = <3>;
+		led_mode = <0>;
 		data = <1>;
 		pwm_config = <0 0 0 0 0>;
 	};
 	led1:led@1 {
 		compatible = "mediatek,green";
-		led_mode = <3>;
+		led_mode = <0>;
 		data = <2>;
 		pwm_config = <0 0 0 0 0>;
 	};
@@ -101,9 +51,8 @@
 	};
 	led5:led@5 {
 		compatible = "mediatek,button-backlight";
-		led_mode = <0>;//set to 2 - gpio mode
-		data = <60>;//gpio number
-		gpio = <&pio 60 0>; //gpio number						   
+		led_mode = <0>;
+		data = <1>;
 		pwm_config = <0 0 0 0 0>;
 	};
 	led6:led@6 {
@@ -213,7 +162,7 @@
 	tpd-resolution = <720 1280>;
 	use-tpd-button = <1>;
 	tpd-key-num = <3>;
-	tpd-key-local= <158 172 580 0>;/* BACK-158 HOME-172 MENU-139 APP_SWITCH-580*/
+	tpd-key-local= <158 172 139 0>;
 	tpd-key-dim-local = <150 1380 20 40 360 1380 20 40 570 1380 20 40 0 0 0 0>;
 	tpd-max-touch-num = <5>;
 	tpd-filter-enable = <1>;
@@ -467,5 +416,5 @@
 };
 /* USB GPIO Kernal Standardization end */
 
-#include <zte_blade_a476_p0_k49/cust.dtsi>
+#include <zte_blade_a476/cust.dtsi>
 /*End of this file, DO NOT ADD ANYTHING HERE*/
