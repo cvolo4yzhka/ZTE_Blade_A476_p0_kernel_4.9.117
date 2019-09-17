@@ -90,7 +90,7 @@
 /*
  * choose your ic chip type of focaltech
  */
-#define FTS_CHIP_TYPE   _FT5446
+#define FTS_CHIP_TYPE   _FT5436
 
 /******************* Enables *********************/
 /*********** 1 to enable, 0 to disable ***********/
@@ -99,13 +99,13 @@
  * show debug log info
  * enable it for debug, disable it for release
  */
-#define FTS_DEBUG_EN 0
+#define FTS_DEBUG_EN 1
 
 /*
  * Linux MultiTouch Protocol
  * 1: Protocol B(default), 0: Protocol A
  */
-#define FTS_MT_PROTOCOL_B_EN                    1
+#define FTS_MT_PROTOCOL_B_EN                    0
 
 /*
  * Report Pressure in multitouch
@@ -117,7 +117,7 @@
  * Gesture function enable
  * default: disable
  */
-#define FTS_GESTURE_EN                          0
+#define FTS_GESTURE_EN                          1
 
 /*
  * ESD check & protection
@@ -163,7 +163,7 @@
  * enable it when customer need control TP power
  * default: disable
  */
-#define FTS_POWER_SOURCE_CUST_EN                0//modify by cassy from 0 to 1
+#define FTS_POWER_SOURCE_CUST_EN                1//modify by cassy from 0 to 1
 
 
 /****************************************************/

@@ -49,22 +49,23 @@
 
 //add by cassy begin
 //#define CONFIG_MTK_POWER
+/*
 #define GTP_enable_power_PORT 2//add by cassy
 struct pinctrl *pinctrl3;
 struct pinctrl_state *focal_power_output1,*focal_power_output0;
 static void tpd_power_on(int flag);
-
+*/
 //add by cassy end
 
 #define FTS_DRIVER_NAME                     "fts_ts"
 #define INTERVAL_READ_REG                   100  //interval time per read reg unit:ms
 #define TIMEOUT_READ_REG                    1000 //timeout of read reg unit:ms
-#define FTS_I2C_SLAVE_ADDR                  0x38
+#define FTS_I2C_SLAVE_ADDR                  0x3e
 
 static DECLARE_WAIT_QUEUE_HEAD(waiter);
 static int tpd_flag;
-unsigned int tpd_rst_gpio_number = 0;
-unsigned int tpd_int_gpio_number = 1;
+unsigned int tpd_rst_gpio_number = 62;
+unsigned int tpd_int_gpio_number = 7;
 
 #if (defined(CONFIG_TPD_HAVE_CALIBRATION) && !defined(CONFIG_TPD_CUSTOM_CALIBRATION))
 static int tpd_def_calmat_local_normal[8]  = TPD_CALIBRATION_MATRIX_ROTATION_NORMAL;
@@ -91,7 +92,7 @@ static void fts_release_all_finger(void);
 *****************************************************************************/
 static const struct i2c_device_id fts_tpd_id[] = {{FTS_DRIVER_NAME, 0}, {} };
 static const struct of_device_id fts_dt_match[] = {
-    {.compatible = "mediatek,ft_cap_touch"},
+    {.compatible = "mediatek,cap_touch"},
     {},
 };
 MODULE_DEVICE_TABLE(of, fts_dt_match);
@@ -347,7 +348,7 @@ int fts_power_init(void)
     int ret;
     /*set TP volt*/
     tpd->reg = regulator_get(tpd->tpd_dev, "vtouch");
-    ret = regulator_set_voltage(tpd->reg, 3000000, 3000000);
+    ret = regulator_set_voltage(tpd->reg, 2800000, 2800000);
     if (ret != 0) {
         FTS_ERROR("[POWER]Failed to set voltage of regulator,ret=%d!", ret);
         return ret;
@@ -859,7 +860,7 @@ static int tpd_i2c_detect(struct i2c_client *client, struct i2c_board_info *info
 * Return:
 ***********************************************************************/
 	//add by cassy begin
-	int tpd_get_gpio_info_focal(struct i2c_client *pdev)
+/*	int tpd_get_gpio_info_focal(struct i2c_client *pdev)
 	{
 		int ret;
 	
@@ -887,7 +888,7 @@ static int tpd_i2c_detect(struct i2c_client *client, struct i2c_board_info *info
 		
 		return 0;
 	}
-	
+*/	
 	
 	//add by cassy end
 
@@ -918,11 +919,11 @@ static int tpd_probe(struct i2c_client *client, const struct i2c_device_id *id)
     }
 	
 	//add by cassy begin
-		tpd_get_gpio_info_focal(client);
+//		tpd_get_gpio_info_focal(client);
 		//add by cassy end
 		
 //add by allen start
-tpd_power_on(1);
+//tpd_power_on(1);
 //add by allen end
     spin_lock_init(&ts_data->irq_lock);
     mutex_init(&ts_data->report_mutex);
@@ -1108,6 +1109,7 @@ static int tpd_remove(struct i2c_client *client)
 *  Return:
 *****************************************************************************/
 //add by cassy begin
+/*
 void tpd_gpio_output_focal(int pin, int level)
 {
 	//mutex_lock(&tpd_set_gpio_mutex);
@@ -1136,7 +1138,7 @@ static void tpd_power_on(int flag)
 
 		}
 	}
-#endif
+#endif*/
 //add by cassy end
 
 static int tpd_local_init(void)
