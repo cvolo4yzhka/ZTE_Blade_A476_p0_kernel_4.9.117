@@ -53,24 +53,34 @@ const struct of_device_id touch_of_match[] = {
 	{ .compatible = "mediatek,touch", },
 	{},
 };
-
+/* function tpd_get_dts_info kernel 4.9 
+ * in focaltecth touch not working 
+ * sensors key's
+ * User function from kernel 4.4
+ */
+ /* tpd_get_dts_info kernel 4.9  */
+/*
 void tpd_get_dts_info(void)
 {
 	struct device_node *node1 = NULL;
 	int key_dim_local[16], i;
-
+TPD_DEBUG("tpd lexx start tpd_get_dts_info");
 	node1 = of_find_matching_node(node1, touch_of_match);
+TPD_DEBUG("tpd lexx node1");
 	if (node1) {
+TPD_DEBUG("tpd lexx node1 innnnn");
 		of_property_read_u32(node1,
 			"tpd-max-touch-num", &tpd_dts_data.touch_max_num);
+		TPD_DEBUG("[tpd]touch_max_num = %d\n",
+			tpd_dts_data.touch_max_num);
 		of_property_read_u32(node1,
 			"use-tpd-button", &tpd_dts_data.use_tpd_button);
-		pr_debug("[tpd]use-tpd-button = %d\n",
+		TPD_DEBUG("[tpd]use-tpd-button = %d\n",
 			tpd_dts_data.use_tpd_button);
 		if (of_property_read_u32_array(node1, "tpd-resolution",
 			tpd_dts_data.tpd_resolution,
 			ARRAY_SIZE(tpd_dts_data.tpd_resolution))) {
-			pr_debug("[tpd] resulution is %d %d",
+			TPD_DEBUG("[tpd] resulution is %d %d",
 				tpd_dts_data.tpd_resolution[0],
 				tpd_dts_data.tpd_resolution[1]);
 		}
@@ -80,7 +90,7 @@ void tpd_get_dts_info(void)
 			if (of_property_read_u32_array(node1, "tpd-key-local",
 				tpd_dts_data.tpd_key_local,
 				ARRAY_SIZE(tpd_dts_data.tpd_key_local)))
-				pr_debug("tpd-key-local: %d %d %d %d",
+				TPD_DEBUG("tpd-key-local: %d %d %d %d",
 					tpd_dts_data.tpd_key_local[0],
 					tpd_dts_data.tpd_key_local[1],
 					tpd_dts_data.tpd_key_local[2],
@@ -91,19 +101,19 @@ void tpd_get_dts_info(void)
 				memcpy(tpd_dts_data.tpd_key_dim_local,
 					key_dim_local, sizeof(key_dim_local));
 				for (i = 0; i < 4; i++) {
-					pr_debug("[tpd]key[%d].key_x = %d\n", i,
+					TPD_DEBUG("[tpd]key[%d].key_x = %d\n", i,
 						tpd_dts_data
 							.tpd_key_dim_local[i]
 							.key_x);
-					pr_debug("[tpd]key[%d].key_y = %d\n", i,
+					TPD_DEBUG("[tpd]key[%d].key_y = %d\n", i,
 						tpd_dts_data
 							.tpd_key_dim_local[i]
 							.key_y);
-					pr_debug("[tpd]key[%d].key_W = %d\n", i,
+					TPD_DEBUG("[tpd]key[%d].key_W = %d\n", i,
 						tpd_dts_data
 							.tpd_key_dim_local[i]
 							.key_width);
-					pr_debug("[tpd]key[%d].key_H = %d\n", i,
+					TPD_DEBUG("[tpd]key[%d].key_H = %d\n", i,
 						tpd_dts_data
 							.tpd_key_dim_local[i]
 							.key_height);
@@ -120,18 +130,18 @@ void tpd_get_dts_info(void)
 				"tpd-filter-custom-prameters",
 				(u32 *)tpd_dts_data.touch_filter.W_W,
 				ARRAY_SIZE(tpd_dts_data.touch_filter.W_W)))
-				pr_debug("get tpd-filter-custom-parameters");
+				TPD_DEBUG("get tpd-filter-custom-parameters");
 			if (of_property_read_u32_array(node1,
 				"tpd-filter-custom-speed",
 				tpd_dts_data.touch_filter.VECLOCITY_THRESHOLD,
 				ARRAY_SIZE(tpd_dts_data
 						.touch_filter
 						.VECLOCITY_THRESHOLD)))
-				pr_debug("get tpd-filter-custom-speed");
+				TPD_DEBUG("get tpd-filter-custom-speed");
 		}
 		memcpy(&tpd_filter,
 			&tpd_dts_data.touch_filter, sizeof(tpd_filter));
-		pr_debug("[tpd]tpd-filter-enable = %d, pixel_density = %d\n",
+		TPD_DEBUG("[tpd]tpd-filter-enable = %d, pixel_density = %d\n",
 				tpd_filter.enable, tpd_filter.pixel_density);
 		tpd_dts_data.tpd_use_ext_gpio =
 			of_property_read_bool(node1, "tpd-use-ext-gpio");
@@ -141,8 +151,86 @@ void tpd_get_dts_info(void)
 
 	} else {
 		TPD_DMESG("can't find touch compatible custom node\n");
+		TPD_DEBUG("tpd lexx not found tpd_get_dts_info");
+	}
+TPD_DEBUG("tpd lexx end tpd_get_dts_info");
+}
+*/
+/* end tpd_get_dts_info kernel 4.9  */
+
+/* tpd_get_dts_info kernel 4.4 */
+
+void tpd_get_dts_info(void)
+{
+	struct device_node *node1 = NULL;
+	int key_dim_local[16], i, ret;
+
+	node1 = of_find_matching_node(node1, touch_of_match);
+	if (node1) {
+		ret = of_property_read_u32(node1, "tpd-max-touch-num", &tpd_dts_data.touch_max_num);
+		if (ret != 0)
+			TPD_DEBUG("tpd-max-touch-num not found\n");
+		ret = of_property_read_u32(node1, "use-tpd-button", &tpd_dts_data.use_tpd_button);
+		if (ret != 0)
+			TPD_DEBUG("use-tpd-button not found\n");
+		else
+			TPD_DEBUG("[tpd]use-tpd-button = %d\n", tpd_dts_data.use_tpd_button);
+		ret = of_property_read_u32_array(node1, "tpd-resolution",
+			tpd_dts_data.tpd_resolution, ARRAY_SIZE(tpd_dts_data.tpd_resolution));
+		if (ret != 0)
+			TPD_DEBUG("tpd-resolution not found\n");
+		if (tpd_dts_data.use_tpd_button) {
+			ret = of_property_read_u32(node1, "tpd-key-num", &tpd_dts_data.tpd_key_num);
+			if (ret != 0)
+				TPD_DEBUG("tpd-key-num not found\n");
+			ret = of_property_read_u32_array(node1, "tpd-key-local",
+				tpd_dts_data.tpd_key_local, ARRAY_SIZE(tpd_dts_data.tpd_key_local));
+			if (ret != 0)
+				TPD_DEBUG("tpd-key-local not found\n");
+			ret = of_property_read_u32_array(node1, "tpd-key-dim-local",
+				key_dim_local, ARRAY_SIZE(key_dim_local));
+			if (ret != 0)
+				TPD_DEBUG("tpd-key-dim-local not found\n");
+
+			memcpy(tpd_dts_data.tpd_key_dim_local, key_dim_local, sizeof(key_dim_local));
+			for (i = 0; i < 4; i++) {
+				pr_debug("[tpd]key[%d].key_x = %d\n", i, tpd_dts_data.tpd_key_dim_local[i].key_x);
+				pr_debug("[tpd]key[%d].key_y = %d\n", i, tpd_dts_data.tpd_key_dim_local[i].key_y);
+				pr_debug("[tpd]key[%d].key_W = %d\n", i, tpd_dts_data.tpd_key_dim_local[i].key_width);
+				pr_debug("[tpd]key[%d].key_H = %d\n", i, tpd_dts_data.tpd_key_dim_local[i].key_height);
+			}
+		}
+		ret = of_property_read_u32(node1, "tpd-filter-enable", &tpd_dts_data.touch_filter.enable);
+		if (ret != 0)
+			TPD_DEBUG("tpd-filter-enable not found\n");
+		if (tpd_dts_data.touch_filter.enable) {
+			ret = of_property_read_u32(node1, "tpd-filter-pixel-density",
+						&tpd_dts_data.touch_filter.pixel_density);
+			if (ret != 0)
+				TPD_DEBUG("tpd-filter-pixel-density not found\n");
+			ret = of_property_read_u32_array(node1, "tpd-filter-custom-prameters",
+				(u32 *)tpd_dts_data.touch_filter.W_W, ARRAY_SIZE(tpd_dts_data.touch_filter.W_W));
+			if (ret != 0)
+				TPD_DEBUG("tpd-filter-custom-prameters not found\n");
+			ret = of_property_read_u32_array(node1, "tpd-filter-custom-speed",
+				tpd_dts_data.touch_filter.VECLOCITY_THRESHOLD,
+				ARRAY_SIZE(tpd_dts_data.touch_filter.VECLOCITY_THRESHOLD));
+			if (ret != 0)
+				TPD_DEBUG("tpd-filter-custom-speed not found\n");
+		}
+		memcpy(&tpd_filter, &tpd_dts_data.touch_filter, sizeof(tpd_filter));
+		TPD_DEBUG("[tpd]tpd-filter-enable = %d, pixel_density = %d\n",
+					tpd_filter.enable, tpd_filter.pixel_density);
+		tpd_dts_data.tpd_use_ext_gpio = of_property_read_bool(node1, "tpd-use-ext-gpio");
+		ret = of_property_read_u32(node1, "tpd-rst-ext-gpio-num", &tpd_dts_data.rst_ext_gpio_num);
+		if (ret != 0)
+			TPD_DEBUG("tpd-rst-ext-gpio-num not found\n");
+	} else {
+		pr_err("[tpd]%s can't find touch compatible custom node\n", __func__);
 	}
 }
+
+/* end tpd_get_dts_info kernel 4.4 */
 
 static DEFINE_MUTEX(tpd_set_gpio_mutex);
 void tpd_gpio_as_int(int pin)
