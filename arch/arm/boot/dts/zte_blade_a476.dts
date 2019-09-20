@@ -21,13 +21,13 @@
 &odm {
 	led0:led@0 {
 		compatible = "mediatek,red";
-		led_mode = <0>;
+		led_mode = <3>;
 		data = <1>;
 		pwm_config = <0 0 0 0 0>;
 	};
 	led1:led@1 {
 		compatible = "mediatek,green";
-		led_mode = <0>;
+		led_mode = <3>;
 		data = <2>;
 		pwm_config = <0 0 0 0 0>;
 	};
@@ -51,8 +51,9 @@
 	};
 	led5:led@5 {
 		compatible = "mediatek,button-backlight";
-		led_mode = <0>;
-		data = <1>;
+		led_mode = <2>;
+		data = <60>;
+		gpio = <&pio 60 0>;
 		pwm_config = <0 0 0 0 0>;
 	};
 	led6:led@6 {
@@ -108,6 +109,7 @@
 		ps_threshold_low =  <750>;
 		is_batch_supported_ps = <0>;
 		is_batch_supported_als = <0>;
+		int-gpio = <&pio 9 0>;
 	};
 };
 
@@ -162,7 +164,7 @@
 	tpd-resolution = <720 1280>;
 	use-tpd-button = <1>;
 	tpd-key-num = <3>;
-	tpd-key-local= <158 172 139 0>;
+	tpd-key-local = <158 172 139 0>;
 	tpd-key-dim-local = <150 1380 20 40 360 1380 20 40 570 1380 20 40 0 0 0 0>;
 	tpd-max-touch-num = <5>;
 	tpd-filter-enable = <1>;
