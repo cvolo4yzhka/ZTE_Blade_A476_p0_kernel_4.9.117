@@ -1143,6 +1143,7 @@ static void tpd_power_on(int flag)
 
 static int tpd_local_init(void)
 {
+
     FTS_FUNC_ENTER();
 	//modify by cassy begin
 #if FTS_POWER_SOURCE_CUST_EN///1//modify by cassy from 0 to 1
@@ -1167,6 +1168,7 @@ static int tpd_local_init(void)
 		
         tpd_button_setting(tpd_dts_data.tpd_key_num, tpd_dts_data.tpd_key_local,
                            tpd_dts_data.tpd_key_dim_local);
+                           
     }
 
 #if (defined(TPD_WARP_START) && defined(TPD_WARP_END))
