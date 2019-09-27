@@ -13,6 +13,9 @@
 
 //s_add new sensor driver here
 //export funtions
+/*A476*/
+UINT32 T4KA3_MIPI_RAW_SensorInit(struct SENSOR_FUNCTION_STRUCT **pfFunc);
+/*A476*/
 /*IMX*/
 UINT32 IMX220_MIPI_RAW_SensorInit(struct SENSOR_FUNCTION_STRUCT **pfFunc);
 UINT32 IMX219_MIPI_RAW_SensorInit(struct SENSOR_FUNCTION_STRUCT **pfFunc);
@@ -137,6 +140,11 @@ UINT32 T8EV5_YUV_SensorInit(struct SENSOR_FUNCTION_STRUCT **pfFunc);
 //! 2. This file should be the same as mediatek\custom\common\hal\imgsensor\src\sensorlist.cpp
 struct ACDK_KD_SENSOR_INIT_FUNCTION_STRUCT kdSensorList[MAX_NUM_OF_SUPPORT_SENSOR+1] =
 {
+/*A476*/
+#if defined(T4KA3_MIPI_RAW)
+    {T4KA3MIPI_SENSOR_ID, SENSOR_DRVNAME_T4KA3_MIPI_RAW, T4KA3_MIPI_RAW_SensorInit},
+#endif
+/*A476*/
 /*IMX*/
 #if defined(IMX220_MIPI_RAW)
     {IMX220_SENSOR_ID, SENSOR_DRVNAME_IMX220_MIPI_RAW, IMX220_MIPI_RAW_SensorInit},

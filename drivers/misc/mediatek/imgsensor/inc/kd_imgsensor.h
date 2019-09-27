@@ -114,6 +114,10 @@
  *
  ************************************************************************/
 /* SENSOR CHIP VERSION */
+/*A476*/
+#define T4KA3MIPI_SENSOR_ID                     0x1490
+#define OV5670MIPI_SENSOR_ID                    0x5670
+/*A476*/
 /*IMX*/
 #define IMX499_SENSOR_ID                        0x0499
 #define IMX486_SENSOR_ID                        0x0486
@@ -164,8 +168,6 @@
 #define OV8825_SENSOR_ID                        0x8825
 #define OV7675_SENSOR_ID                        0x7673
 #define OV5693_SENSOR_ID                        0x5690
-#define OV5670MIPI_SENSOR_ID                    0x5670
-#define OV5670MIPI_SENSOR_ID_2                  (0x5670+010000)
 #define OV5675MIPI_SENSOR_ID                    0x5675
 #define OV5671MIPI_SENSOR_ID                    0x5671
 #define OV5650_SENSOR_ID                        0x5651
@@ -312,6 +314,10 @@
 /* CAMERA DRIVER NAME */
 #define CAMERA_HW_DEVNAME                       "kd_camera_hw"
 /* SENSOR DEVICE DRIVER NAME */
+/*A476*/
+#define SENSOR_DRVNAME_T4KA3_MIPI_RAW           "t4ka3mipiraw"
+#define SENSOR_DRVNAME_OV5670_MIPI_RAW          "ov5670mipiraw"
+/*A476*/
 /*IMX*/
 #define SENSOR_DRVNAME_IMX499_MIPI_RAW          "imx499_mipi_raw"
 #define SENSOR_DRVNAME_IMX486_MIPI_RAW          "imx486_mipi_raw"
@@ -362,9 +368,6 @@
 #define SENSOR_DRVNAME_OV8825_MIPI_RAW          "ov8825_mipi_raw"
 #define SENSOR_DRVNAME_OV7675_YUV               "ov7675_yuv"
 #define SENSOR_DRVNAME_OV5693_MIPI_RAW          "ov5693_mipi_raw"
-#define SENSOR_DRVNAME_OV5670_MIPI_RAW          "ov5670_mipi_raw"
-#define SENSOR_DRVNAME_OV5670_MIPI_RAW_3MP      "ov5670_mipi_raw_3mp"
-#define SENSOR_DRVNAME_OV5670_MIPI_RAW_2        "ov5670_mipi_raw_2"
 #define SENSOR_DRVNAME_OV5675_MIPI_RAW          "ov5675mipiraw"
 #define SENSOR_DRVNAME_OV5671_MIPI_RAW          "ov5671_mipi_raw"
 #define SENSOR_DRVNAME_OV5647MIPI_RAW           "ov5647_mipi_raw"
