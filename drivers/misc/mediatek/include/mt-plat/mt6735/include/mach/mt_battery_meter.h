@@ -37,6 +37,10 @@
 #define DISABLE_RFG_EXIST_CHECK
 #endif
 
+#ifdef CONFIG_MTK_BQ24158_SUPPORT
+#define EXTERNAL_SWCHR_SUPPORT
+#endif
+
 /* ADC resistor  */
 #define R_BAT_SENSE 4
 #define R_I_SENSE 4
