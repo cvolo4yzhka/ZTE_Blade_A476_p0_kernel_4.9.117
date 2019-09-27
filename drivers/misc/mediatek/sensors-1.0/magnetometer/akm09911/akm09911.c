@@ -31,6 +31,11 @@
 #include "cust_mag.h"
 #include "mag.h"
 
+/*fix mag init*/
+#include <mt-plat/mt_gpio.h>
+#include <mach/gpio_const.h>
+/*end fix mag init*/
+
 #define DEBUG 0
 #define AKM09911_DEV_NAME "akm09911"
 #define DRIVER_VERSION "1.0.1"
@@ -1674,6 +1679,24 @@ static int akm09911_i2c_probe(struct i2c_client *client,
 	struct akm09911_i2c_data *data = NULL;
 	struct mag_control_path ctl = {0};
 	struct mag_data_path mag_data = {0};
+	
+/*fix mag init */
+	mt_set_gpio_mode(GPIO61 | 0x80000000,GPIO_MODE_00); //GPIO_MSE_EINT_PIN
+	mt_set_gpio_dir(GPIO61 | 0x80000000,GPIO_DIR_OUT);
+	mt_set_gpio_out(GPIO61 | 0x80000000,GPIO_OUT_ONE);
+
+	mt_set_gpio_mode(GPIO127 | 0x80000000,GPIO_MODE_00);
+    mt_set_gpio_dir(GPIO127 | 0x80000000,GPIO_DIR_OUT);
+    mt_set_gpio_out(GPIO127 | 0x80000000,GPIO_OUT_ONE);
+       
+    mt_set_gpio_mode(GPIO126 | 0x80000000,GPIO_MODE_00);
+    mt_set_gpio_dir(GPIO126 | 0x80000000,GPIO_DIR_OUT);
+    mt_set_gpio_out(GPIO126 | 0x80000000,GPIO_OUT_ZERO);
+
+	mt_set_gpio_mode(GPIO64 | 0x80000000,GPIO_MODE_00); //GPIO64 - GPIO_CMMB_RST_PIN
+	mt_set_gpio_dir(GPIO64 | 0x80000000,GPIO_DIR_OUT);
+	mt_set_gpio_out(GPIO64 | 0x80000000,GPIO_OUT_ZERO);
+/*fix mag init end*/
 
 	pr_debug("akm09911_i2c_probe\n");
 	data = kzalloc(sizeof(struct akm09911_i2c_data), GFP_KERNEL);
