@@ -25,6 +25,8 @@
 #define LM3643_DTNAME_I2C "mediatek,strobe_main"
 #define LM3644_DTNAME     "mediatek,flashlights_lm3644"
 #define LM3644_DTNAME_I2C "mediatek,strobe_main"
+#define LM3646_DTNAME     "mediatek,flashlights_lm3646"
+#define LM3646_DTNAME_I2C "mediatek,strobe_main"
 #define MT6336_DTNAME     "mediatek,flashlights_mt6336"
 #define MT6370_DTNAME     "mediatek,flashlights_mt6370"
 #define RT4505_DTNAME     "mediatek,flashlights_rt4505"

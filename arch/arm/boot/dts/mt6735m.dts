@@ -1735,15 +1735,15 @@ firmware_class.path=/vendor/firmware";
 			compatible = "mediatek,flashlight_core";
 		};
 
-/*		flashlights_lm3642: flashlights_lm3642 {
-			compatible = "mediatek,flashlights_lm3642";
+		flashlights_lm3646: flashlights_lm3646 {
+			compatible = "mediatek,flashlights_lm3646";
 			decouple = <1>;
 			channel@1 {
 				type = <0>;
 				ct = <0>;
 				part = <0>;
 			};
-		};*/
+		};
 
 		SENINF_TOP@0x15008000 {
 			compatible = "mediatek,SENINF_TOP";
