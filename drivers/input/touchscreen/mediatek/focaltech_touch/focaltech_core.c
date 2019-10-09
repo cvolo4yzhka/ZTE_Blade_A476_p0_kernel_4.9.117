@@ -64,8 +64,8 @@ static void tpd_power_on(int flag);
 
 static DECLARE_WAIT_QUEUE_HEAD(waiter);
 static int tpd_flag;
-unsigned int tpd_rst_gpio_number = 62;
-unsigned int tpd_int_gpio_number = 7;
+unsigned int tpd_rst_gpio_number = 0;
+unsigned int tpd_int_gpio_number = 1;
 
 #if (defined(CONFIG_TPD_HAVE_CALIBRATION) && !defined(CONFIG_TPD_CUSTOM_CALIBRATION))
 static int tpd_def_calmat_local_normal[8]  = TPD_CALIBRATION_MATRIX_ROTATION_NORMAL;
