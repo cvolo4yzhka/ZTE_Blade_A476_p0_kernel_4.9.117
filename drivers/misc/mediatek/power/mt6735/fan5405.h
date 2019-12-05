@@ -142,7 +142,7 @@
   *   [Extern Function]
   *
   *********************************************************/
-extern kal_bool chargin_hw_init_done;
+//extern kal_bool chargin_hw_init_done;
 /* CON0---------------------------------------------------- */
 extern int is_fan5405_exist(void);
 extern void fan5405_set_tmr_rst(unsigned int val);

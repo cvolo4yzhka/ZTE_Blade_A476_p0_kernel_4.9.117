@@ -46,7 +46,7 @@
 #define LM3646_NAME "flashlights-lm3646"
 
 /* define level */
-#define LM3646_LEVEL_NUM 2
+#define LM3646_LEVEL_NUM 1
 #define LM3646_LEVEL_TORCH 1
 #define LM3646_HW_TIMEOUT 1000 /* ms */
 

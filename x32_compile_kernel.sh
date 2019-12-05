@@ -1,7 +1,7 @@
 #!/bin/bash
 #set architectute
 export ARCH=arm
-#set cross compiller path
+#set cross compiller path /toolchain
 export CROSS_COMPILE=~/Kernel/toolchain/arm-linux-androideabi-4.9/bin/arm-linux-androideabi-
 #set directory for build output
 export  KBUILD_OUTPUT=out32
