@@ -22,6 +22,8 @@
 #include <stdarg.h>
 #include <linux/slab.h>
 #include <mt-plat/met_drv.h>
+#include <linux/kallsyms.h>
+#include <linux/trace_events.h>
 
 #include "ddp_mmp.h"
 #include "disp_debug.h"
@@ -136,14 +138,13 @@ static MMP_Event dprec_mmp_event_spy(enum DPREC_LOGGER_ENUM l)
 	return 0xffff;
 }
 
-static void dprec_to_mmp(unsigned int type_logsrc, MMP_LogType mmp_log, unsigned int data1,
+static void dprec_to_mmp(unsigned int type_logsrc, enum mmp_log_type mmp_log, unsigned int data1,
 			 unsigned data2)
 {
-	int MMP_Event = dprec_mmp_event_spy(type_logsrc);
-
-	if (MMP_Event < MMProfileMaxEventCount)  /* if (MMP_Event < 0xffff) */
-		mmprofile_log_ex(MMP_Event, mmp_log, data1, data2);
-
+	int Event = dprec_mmp_event_spy(type_logsrc);
+	if (Event < MMProfileMaxEventCount)  
+	/* if (Event < 0xffff) */
+		mmprofile_log_ex(Event, mmp_log, data1, data2);
 }
 
 /*static const char *_find_module_by_reg_addr(unsigned int reg)
@@ -1044,7 +1045,7 @@ void init_log_buffer(void)
 	/*
 	1. Allocate debug buffer. This buffer used to store the output data.
 	*/
-	debug_buffer = kzalloc(sizeof(char) * DEBUG_BUFFER_SIZE, GFP_KERNEL);
+	debug_buffer = kzalloc(sizeof(char) * DPREC_ERROR_LOG_BUFFER_LENGTH, GFP_KERNEL);
 	if (!debug_buffer)
 		goto err_debug;
 
@@ -1070,7 +1071,7 @@ void init_log_buffer(void)
 	/*
 	3. Allocate log ring buffer.
 	*/
-	buf_size = sizeof(char) * (DEBUG_BUFFER_SIZE - 4096);
+	buf_size = sizeof(char) * (DPREC_ERROR_LOG_BUFFER_LENGTH - 4096);
 	temp_buf = kzalloc(buf_size, GFP_KERNEL);
 	if (!temp_buf)
 		goto err;
@@ -1240,30 +1241,36 @@ int dprec_logger_get_buf(enum DPREC_LOGGER_PR_TYPE type, char *stringbuf, int le
 
 void get_disp_err_buffer(unsigned long *addr, unsigned long *size, unsigned long *start)
 {
-	*addr = (unsigned long)err_buffer[0];
-	*size = ERROR_BUFFER_COUNT * LOGGER_BUFFER_SIZE;
-	*start = 0;
+		*addr = 0;
+		*size = 0;
+		*start = 0;
 }
 
 void get_disp_fence_buffer(unsigned long *addr, unsigned long *size, unsigned long *start)
 {
-	*addr = (unsigned long)fence_buffer[0];
-	*size = FENCE_BUFFER_COUNT * LOGGER_BUFFER_SIZE;
-	*start = 0;
+		*addr = 0;
+		*size = 0;
+		*start = 0;
 }
 
 void get_disp_dbg_buffer(unsigned long *addr, unsigned long *size, unsigned long *start)
 {
-	*addr = (unsigned long)dbg_buffer[0];
-	*size = DEBUG_BUFFER_COUNT * LOGGER_BUFFER_SIZE;
-	*start = 0;
+	if (is_buffer_init) {
+		*addr = (unsigned long)dbg_buffer[0];
+		*size = DEBUG_BUFFER_COUNT * LOGGER_BUFFER_SIZE;
+		*start = 0;
+	} else {
+		*addr = 0;
+		*size = 0;
+		*start = 0;
+	}
 }
 
 void get_disp_dump_buffer(unsigned long *addr, unsigned long *size, unsigned long *start)
 {
-	*addr = (unsigned long)dump_buffer[0];
-	*size = DUMP_BUFFER_COUNT * LOGGER_BUFFER_SIZE;
-	*start = 0;
+		*addr = 0;
+		*size = 0;
+		*start = 0;
 }
 
 
