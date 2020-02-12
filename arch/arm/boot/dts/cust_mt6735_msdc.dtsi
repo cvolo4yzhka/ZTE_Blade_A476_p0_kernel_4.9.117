@@ -22,8 +22,10 @@
 	mmc-hs400-1_8v;
 	no-sd;
 	no-sdio;
+        cap-mmc-hw-reset;
 	non-removable;
 	pinctl = <&msdc0_pins_default>;
+        pinctl_hs400 = <&msdc0_pins_hs400>;
 	pinctl_hs200 = <&msdc0_pins_hs200>;
 	register_setting = <&msdc0_register_setting_default>;
 	host_function = /bits/ 8 <MSDC_EMMC>;
@@ -73,6 +75,24 @@
 
 &pio {
 	msdc0_pins_default: msdc0@default {
+		pins_cmd {
+			drive-strength = /bits/ 8 <2>;
+		};
+		pins_dat {
+			drive-strength = /bits/ 8 <2>;
+		};
+		pins_clk {
+			drive-strength = /bits/ 8 <2>;
+		};
+		pins_rst {
+			drive-strength = /bits/ 8 <2>;
+		};
+		pins_ds {
+			drive-strength = /bits/ 8 <2>;
+		};
+	};
+
+	msdc0_pins_hs400: msdc0@hs400 {
 		pins_cmd {
 			drive-strength = /bits/ 8 <2>;
 		};
