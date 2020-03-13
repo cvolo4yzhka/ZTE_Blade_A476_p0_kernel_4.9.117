@@ -10,7 +10,6 @@
 #else
 #include "mt6735m.dts"
 #endif
-#include <dt-bindings/lcm/otm9608_qhd_dsi_cmd.dtsi>
 
 &cpus {
 	#address-cells = <1>;
