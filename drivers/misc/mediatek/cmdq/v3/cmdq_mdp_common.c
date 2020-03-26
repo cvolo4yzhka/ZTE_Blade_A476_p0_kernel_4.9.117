@@ -994,8 +994,11 @@ s32 cmdq_mdp_flush_async(struct cmdqCommandStruct *desc, bool user_space,
 			}
 		}
 
-		if (!cmdq_core_check_pkt_valid(handle->pkt))
+		if (!cmdq_core_check_pkt_valid(handle->pkt)) {
+			cmdq_task_destroy(handle);
+			CMDQ_SYSTRACE_END();
 			return -EFAULT;
+		}
 
 		err = cmdq_task_append_backup_reg(handle,
 			desc->regRequest.count,
@@ -1179,7 +1182,7 @@ s32 cmdq_mdp_flush(struct cmdqCommandStruct *desc, bool user_space)
 	s32 status;
 
 	status = cmdq_mdp_flush_async(desc, user_space, &handle);
-	if (!handle) {
+	if (!handle || status < 0) {
 		CMDQ_ERR("mdp flush async failed:%d\n", status);
 		return status;
 	}
